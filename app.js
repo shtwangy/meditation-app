@@ -8,6 +8,7 @@ const app = () => {
     const sounds = document.querySelectorAll('.sound-picker button');
     // Time Display
     const timeDisplay = document.querySelector('.time-display');
+    const timeSelect = document.querySelectorAll('.time-selector button');
     // Get the length of the outline
     const outlineLength = outline.getTotalLength();
     // Duration
@@ -18,6 +19,14 @@ const app = () => {
     // play sounds
     play.addEventListener('click', () => {
         checkPlaying(song);
+    });
+
+    // select time
+    timeSelect.forEach(option => {
+        option.addEventListener('click', function () {
+            fakeDuration = this.getAttribute('data-time');
+            timeDisplay.textContent = `${Math.floor(fakeDuration / 60)}:${Math.floor(fakeDuration % 60)}`;
+        })
     });
 
     // Create a function specific to step and play the sounds
@@ -31,7 +40,7 @@ const app = () => {
             video.pause();
             play.src = './svg/play.svg';
         }
-    }
+    };
 
     // Circle Animation
     song.ontimeupdate = () => {
