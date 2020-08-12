@@ -61,7 +61,7 @@ video {
 }
 
 .time-selector button:focus, .sound-picker button:focus {
-    outline: 0;
+    outline: none;
     color: black;
     background: white;
 }
