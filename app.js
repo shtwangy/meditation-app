@@ -34,7 +34,7 @@ const app = () => {
     timeSelect.forEach(option => {
         option.addEventListener('click', function () {
             fakeDuration = this.getAttribute('data-time');
-            timeDisplay.textContent = `${Math.floor(fakeDuration / 60)}:${Math.floor(fakeDuration % 60)}`;
+            timeDisplay.textContent = createDisplayTimeString(fakeDuration);
         })
     });
 
@@ -55,14 +55,12 @@ const app = () => {
     song.ontimeupdate = () => {
         let currentTime = song.currentTime;
         let elapsed = fakeDuration - currentTime;
-        let seconds = Math.floor(elapsed % 60);
-        let minutes = Math.floor(elapsed / 60);
 
         // Animate circle
         let progress = outlineLength - (currentTime / fakeDuration) * outlineLength;
         outline.style.strokeDashoffset = progress;
         // Animate the text
-        timeDisplay.textContent = `${minutes}:${seconds}`;
+        timeDisplay.textContent = createDisplayTimeString(elapsed);
 
         if(currentTime >= fakeDuration) {
             song.pause();
@@ -70,6 +68,14 @@ const app = () => {
             play.src = './svg/play.svg';
             video.pause();
         }
+    };
+
+    function getDoubleDigitNumber(number) {
+        return ("0" + number).slice(-2)
+    };
+
+    function createDisplayTimeString(time) {
+        return `${getDoubleDigitNumber(Math.floor(time / 60))}:${getDoubleDigitNumber(Math.floor(time % 60))}`;
     }
 };
 
